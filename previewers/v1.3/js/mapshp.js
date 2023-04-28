@@ -35,9 +35,8 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(e){
             //console.log('DataURL:', e.target.result);
-	    console.log('data readed');
-            convertToLayer(e.target.result);
-	    
+	    console.log('data ready');
+            convertToLayer(e.target.result);	    
         };
     };
     request.send();
