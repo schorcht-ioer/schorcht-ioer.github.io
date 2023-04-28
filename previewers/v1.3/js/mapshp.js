@@ -20,6 +20,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 
     // add shp data to map and zoom to added features 
     var s = Uint8Array.from(data, x => x.charCodeAt(0));
+    console.log(s);
     convertToLayer(s);
     
 }
