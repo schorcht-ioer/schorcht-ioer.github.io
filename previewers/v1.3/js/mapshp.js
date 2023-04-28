@@ -10,7 +10,7 @@ function translateBaseHtmlPage() {
     $( '.mapPreviewText' ).text( mapPreviewText );
 }
 
-function writeContentAndData(fileUrl, file, title, authors) {
+function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
     
     console.log('fileUrl');
