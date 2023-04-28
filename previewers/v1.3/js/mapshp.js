@@ -1,6 +1,9 @@
 $(document).ready(function() {
     startPreview(true);
 });
+
+// initialize the map
+var map = L.map('map').fitWorld();
     
 function translateBaseHtmlPage() {
     var mapPreviewText = $.i18n( "mapPreviewText" );
@@ -12,10 +15,6 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     
     console.log('fileUrl');
     console.log(fileUrl);
-
-    
-    // initialize the map
-    var map = L.map('map').fitWorld();
 
     // load a tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
