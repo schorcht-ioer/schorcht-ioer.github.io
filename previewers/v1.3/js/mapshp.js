@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    startPreview(true);
-    console.log('document ready');
+    startPreview(false);   
 });
 
 // initialize the map
