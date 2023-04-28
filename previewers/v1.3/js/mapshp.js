@@ -20,7 +20,8 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     }).addTo(map);
 
     // add shp data to map and zoom to added features    
-    console.log('handleZipFile'); 
+    //console.log('handleZipFile'); 
+    var data_complete = await data;
     handleZipFile(data);
     
 }
@@ -28,7 +29,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 function handleZipFile(data){
     console.log('data');
     console.log(data);
-    convertToLayer(await str2ab(data));
+    convertToLayer(str2ab(data));
     //var reader = new FileReader();
     //reader.onload = function(){
     //    if (reader.readyState != 2 || reader.error){
