@@ -25,9 +25,25 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     // add shp data to map and zoom to added features    
     //console.log('handleZipFile'); 
     //var data_complete = data;
-    handleZipFile(data);
+    //handleZipFile(data);
     
-}
+    var request = new XMLHttpRequest();
+    request.open('GET', fileUrl, true);
+    request.responseType = 'blob';
+    request.onload = function() {
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = function(){
+	          if (reader.readyState != 2 || reader.error){
+	        	  return;
+	          } else {
+	        	  convertToLayer(reader.result);
+        	}
+        }  
+    };
+    request.send();
+        
+    }
 
 function handleZipFile(data){
     console.log(data);
