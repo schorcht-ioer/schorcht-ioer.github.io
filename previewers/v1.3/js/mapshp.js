@@ -1,11 +1,10 @@
 $(document).ready(function() {
     startPreview(true);
-    console.log('document ready');
 });
 
 // initialize the map
-var map = L.map('map').fitWorld();
-    
+var map = L.map('map').fitWorld();  
+
 function translateBaseHtmlPage() {
     var mapPreviewText = $.i18n( "mapPreviewText" );
     $( '.mapPreviewText' ).text( mapPreviewText );
@@ -13,48 +12,29 @@ function translateBaseHtmlPage() {
 
 function writeContentAndData(data, fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
-    
-    console.log('fileUrl');
-    console.log(fileUrl);
 
     // load a tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    var request = new XMLHttpRequest();
-    request.open('GET', fileUrl, true);
-    request.responseType = 'blob';
-    request.onload = function() {
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(request.response);
-        reader.onload =  function(e){
-            //console.log('DataURL:', e.target.result);
-            console.log('data readed');
-            convertToLayer(e.target.result);
-      
-        };
-    };
-    request.send();
-        
-}
-
-//More info: https://developer.mozilla.org/en-US/docs/Web/API/FileReader
-function handleZipFile(file){
-	var reader = new FileReader();
-  reader.onload = function(){
-	  if (reader.readyState != 2 || reader.error){
-		  return;
-	  } else {
-		  convertToLayer(reader.result);
-  	}
-  }
-  reader.readAsArrayBuffer(file);
+    // add shp data to map and zoom to added features 
+    convertToLayer(str2ab(data))
+    
 }
 
 function convertToLayer(buffer){
-	shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js
-    var layer = L.shapefile(geojson).addTo(map);//More info: https://github.com/calvinmetcalf/leaflet.shapefile
-    console.log(layer);
-  });
+    shp(buffer).then(function(shp){	
+        var layer = L.shapefile(shp).addTo(map);
+        map.fitBounds(layer.getBounds());
+    });
+}
+
+function str2ab(str) {
+    var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+    var bufView = new Uint8Array(buf);
+    for (var i=0, strLen=str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
 }
