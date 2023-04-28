@@ -30,15 +30,10 @@ function handleZipFile(data){
     console.log('data');
     //console.log(data);
     //convertToLayer(str2ab(data));
-    var reader = new FileReader();
-    reader.onload = function(){
-        if (reader.readyState != 2 || reader.error){
-            return;
-        } else {
-            convertToLayer(str2ab(reader.result));
-        }
+    //var reader = new FileReader();
+    window.onload = function(){
+        convertToLayer(str2ab(data));        
     }
-    reader.readAsBinaryString(data);
 }
 
 function convertToLayer(buffer){
