@@ -1,5 +1,6 @@
 $(document).ready(function() {
     startPreview(true);
+    console.log('document ready');
 });
 
 // initialize the map
@@ -29,7 +30,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(e){
             //console.log('DataURL:', e.target.result);
-      console.log('data readed');
+            console.log('data readed');
             convertToLayer(e.target.result);
       
         };
