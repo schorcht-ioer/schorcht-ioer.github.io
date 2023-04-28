@@ -32,6 +32,7 @@ function handleZipFile(data){
     //convertToLayer(str2ab(data));
     //var reader = new FileReader();
     window.onload = function(){
+        console.log('page loaded');
         convertToLayer(str2ab(data));        
     }
 }
