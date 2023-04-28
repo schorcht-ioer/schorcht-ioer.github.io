@@ -9,9 +9,7 @@ function translateBaseHtmlPage() {
 
 function writeContentAndData(data, fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
-    
-    console.log('file'); 
-    console.log(file); 
+
     
     // initialize the map
     var map = L.map('map').fitWorld();
@@ -23,20 +21,21 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 
     // add shp data to map and zoom to added features    
     console.log('handleZipFile'); 
-    handleZipFile(file);
+    handleZipFile(data);
     
 }
 
 function handleZipFile(data){
-    var reader = new FileReader();
-    reader.onload = function(){
-        if (reader.readyState != 2 || reader.error){
-            return;
-        } else {
-            convertToLayer(reader.result);
-        }
-    }
-    reader.readAsArrayBuffer(data);
+    convertToLayer(str2ab(data));
+    //var reader = new FileReader();
+    //reader.onload = function(){
+    //    if (reader.readyState != 2 || reader.error){
+    //        return;
+    //    } else {
+    //        convertToLayer(reader.result);
+    //    }
+    //}
+    //reader.readAsArrayBuffer(data);
 }
 
 function convertToLayer(buffer){
@@ -45,4 +44,13 @@ function convertToLayer(buffer){
         map.fitBounds(layer.getBounds());
     //console.log(layer);
     });
+}
+
+function str2ab(str) {
+    var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+    var bufView = new Uint16Array(buf);
+    for (var i=0, strLen=str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
 }
