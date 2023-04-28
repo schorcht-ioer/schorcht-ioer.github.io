@@ -35,8 +35,8 @@ function writeContent(fileUrl, file, title, authors) {
 }
 
 function convertToLayer(buffer){
-    shp(buffer).then(function(shape){	//More info: https://github.com/calvinmetcalf/shapefile-js
-        var layer = L.shapefile(shape).addTo(map);  //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+    shp(buffer).then(function(shapeData){	//More info: https://github.com/calvinmetcalf/shapefile-js
+        var shape = L.shapefile(shapeData).addTo(map);  //More info: https://github.com/calvinmetcalf/leaflet.shapefile
         map.fitBounds(shape.getBounds());    
     });
 }
