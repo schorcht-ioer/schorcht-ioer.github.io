@@ -32,9 +32,10 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     request.responseType = 'blob';
     request.onload = function() {
         var reader = new FileReader();
-        reader.readAsDataURL(request.response);
+        reader.readAsArrayBuffer(request.response);
         reader.onload =  function(e){
-            console.log('DataURL:', e.target.result);
+            //console.log('DataURL:', e.target.result);
+	    console.log('data readed');
             convertToLayer(e.target.result);
 	    
         };
