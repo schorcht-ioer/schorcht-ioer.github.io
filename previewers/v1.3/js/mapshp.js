@@ -10,6 +10,9 @@ function translateBaseHtmlPage() {
 function writeContentAndData(data, fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
     
+    console.log('file'); 
+    console.log(file); 
+    
     // initialize the map
     var map = L.map('map').fitWorld();
 
@@ -19,8 +22,8 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     }).addTo(map);
 
     // add shp data to map and zoom to added features    
-    console.log('handleZipFile'); 
-    handleZipFile(data);
+    //console.log('handleZipFile'); 
+    //handleZipFile(data);
     
 }
 
