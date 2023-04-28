@@ -28,7 +28,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     //handleZipFile(data);   
 	
     var request = new XMLHttpRequest();
-    request.open('GET', MY_URL, true);
+    request.open('GET', fileUrl, true);
     request.responseType = 'blob';
     request.onload = function() {
         var reader = new FileReader();
