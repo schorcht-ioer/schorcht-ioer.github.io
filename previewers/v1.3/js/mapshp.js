@@ -19,7 +19,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
     }).addTo(map);
 
     // add shp data to map and zoom to added features
-    console.log(data);
+    console.log(file);
     
     if (data.name.slice(-3) != 'zip'){
         console.log('not a zip file');  	
