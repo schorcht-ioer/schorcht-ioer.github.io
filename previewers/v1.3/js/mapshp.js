@@ -11,7 +11,7 @@ function translateBaseHtmlPage() {
     $( '.mapPreviewText' ).text( mapPreviewText );
 }
 
-function writeContentAndData(data, fileUrl, file, title, authors) {
+function writeContentAndData(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
     
     console.log('fileUrl');
@@ -29,27 +29,12 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         var reader = new FileReader();
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(e){
-            //console.log('DataURL:', e.target.result);
-            console.log('data readed');
             convertToLayer(e.target.result);
       
         };
     };
     request.send();
         
-}
-
-//More info: https://developer.mozilla.org/en-US/docs/Web/API/FileReader
-function handleZipFile(file){
-	var reader = new FileReader();
-  reader.onload = function(){
-	  if (reader.readyState != 2 || reader.error){
-		  return;
-	  } else {
-		  convertToLayer(reader.result);
-  	}
-  }
-  reader.readAsArrayBuffer(file);
 }
 
 function convertToLayer(buffer){
