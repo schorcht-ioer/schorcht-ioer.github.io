@@ -22,11 +22,6 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // add shp data to map and zoom to added features    
-    //console.log('handleZipFile'); 
-    //var data_complete = data;
-    //handleZipFile(data);   
-	
     var request = new XMLHttpRequest();
     request.open('GET', fileUrl, true);
     request.responseType = 'blob';
@@ -35,39 +30,31 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(e){
             //console.log('DataURL:', e.target.result);
-	    console.log('data ready');
-            convertToLayer(e.target.result);	    
+      console.log('data readed');
+            convertToLayer(e.target.result);
+      
         };
     };
     request.send();
         
 }
 
-function handleZipFile(data){
-    console.log(data);
-    //data.then(convertToLayer(str2ab(data)));
-    //if (document.readyState == 'loading') {
-    //  // still loading, wait for the event
-    //  document.addEventListener('DOMContentLoaded', convertToLayer);
-    //} else {
-    //  // DOM is ready!
-    //  convertToLayer(str2ab(data));
-    //}
+//More info: https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+function handleZipFile(file){
+	var reader = new FileReader();
+  reader.onload = function(){
+	  if (reader.readyState != 2 || reader.error){
+		  return;
+	  } else {
+		  convertToLayer(reader.result);
+  	}
+  }
+  reader.readAsArrayBuffer(file);
 }
 
 function convertToLayer(buffer){
-    shp(buffer).then(function(geojson){	
-        var layer = L.shapefile(geojson).addTo(map);
-        map.fitBounds(layer.getBounds());
-    //console.log(layer);
-    });
-}
-
-function str2ab(str) {
-    var buf = new ArrayBuffer(str.length*2);
-    var bufView = new Uint8Array(buf);
-    for (var i=0, strLen=str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
+	shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js
+    var layer = L.shapefile(geojson).addTo(map);//More info: https://github.com/calvinmetcalf/leaflet.shapefile
+    console.log(layer);
+  });
 }
