@@ -9,6 +9,9 @@ function translateBaseHtmlPage() {
 
 function writeContentAndData(data, fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
+    
+    console.log('fileUrl');
+    console.log(fileUrl);
 
     
     // initialize the map
