@@ -18,17 +18,10 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // add shp data to map and zoom to added features
-    console.log(file);
+    // add shp data to map and zoom to added features    
+    console.log('handleZipFile'); 
+    handleZipFile(data);
     
-    if (data.name.slice(-3) != 'zip'){
-        console.log('not a zip file');  	
-        return;
-    } else {
-        document.getElementById('warning').innerHTML = '';
-        console.log('zip found'); 
-        handleZipFile(data);
-    }
 }
 
 function handleZipFile(data){
@@ -40,7 +33,7 @@ function handleZipFile(data){
             convertToLayer(reader.result);
         }
     }
-    reader.readAsArrayBuffer(data);
+    reader.readAsBinaryString(data);
 }
 
 function convertToLayer(buffer){
