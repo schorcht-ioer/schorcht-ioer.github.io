@@ -28,12 +28,12 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 
 function handleZipFile(data){
     console.log('data');
-    //console.log(data);
-    //convertToLayer(str2ab(data));
-    //var reader = new FileReader();
-    window.onload = function(){
-        console.log('page loaded');
-        convertToLayer(str2ab(data));        
+    if (document.readyState == 'loading') {
+      // still loading, wait for the event
+      document.addEventListener('DOMContentLoaded', convertToLayer);
+    } else {
+      // DOM is ready!
+      convertToLayer(str2ab(data));
     }
 }
 
