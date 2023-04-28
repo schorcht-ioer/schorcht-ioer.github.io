@@ -12,15 +12,13 @@ function translateBaseHtmlPage() {
 
 function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
-    
-    console.log('fileUrl');
-    console.log(fileUrl);
 
     // load a tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
+    
+    // get data
     var request = new XMLHttpRequest();
     request.open('GET', fileUrl, true);
     request.responseType = 'blob';
@@ -37,8 +35,8 @@ function writeContent(fileUrl, file, title, authors) {
 }
 
 function convertToLayer(buffer){
-	shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js
-    var layer = L.shapefile(geojson).addTo(map);//More info: https://github.com/calvinmetcalf/leaflet.shapefile
-    console.log(layer);
-  });
+    shp(buffer).then(function(shape){	//More info: https://github.com/calvinmetcalf/shapefile-js
+        var layer = L.shapefile(shape).addTo(map);  //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+        map.fitBounds(shape.getBounds());    
+    });
 }
