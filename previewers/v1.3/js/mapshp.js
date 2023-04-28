@@ -26,6 +26,8 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 }
 
 function handleZipFile(data){
+    console.log('str2ab(data)');
+    console.log(str2ab(data));
     convertToLayer(str2ab(data));
     //var reader = new FileReader();
     //reader.onload = function(){
