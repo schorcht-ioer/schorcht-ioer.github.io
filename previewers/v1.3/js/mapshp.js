@@ -21,7 +21,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 
     // add shp data to map and zoom to added features    
     //console.log('handleZipFile'); 
-    var data_complete = await data;
+    //var data_complete = data;
     handleZipFile(data);
     
 }
