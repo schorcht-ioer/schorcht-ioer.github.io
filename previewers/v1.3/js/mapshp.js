@@ -38,7 +38,7 @@ function handleZipFile(data){
             convertToLayer(str2ab(reader.result));
         }
     }
-    reader.readAsText()(data);
+    reader.readAsText(data);
 }
 
 function convertToLayer(buffer){
