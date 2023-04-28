@@ -47,7 +47,7 @@ function writeContentAndData(data, fileUrl, file, title, authors) {
 
 function handleZipFile(data){
     console.log(data);
-    data.then(convertToLayer(str2ab(data)));
+    //data.then(convertToLayer(str2ab(data)));
     //if (document.readyState == 'loading') {
     //  // still loading, wait for the event
     //  document.addEventListener('DOMContentLoaded', convertToLayer);
