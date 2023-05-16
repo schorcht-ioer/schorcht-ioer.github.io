@@ -78,7 +78,7 @@ function show_error(error_text){
 function checkIfLoaded() {
     setTimeout(() => {
         if(!raster_loaded){
-            show_error("The raster could not be loaded. This may be because it is not a valid GeoTIFF (e.g. projection information is missing). Or the TIFF has a palette with interleaving type "BSQ", which is not supported.");
+            show_error("The raster could not be loaded. This may be because it is not a valid GeoTIFF (e.g. projection information is missing). Or the TIFF has a palette with interleaving type 'BSQ', which is not supported.");
             spinner.stop();
             $('#spinnerContainer').hide();
         }  
