@@ -13,7 +13,7 @@ function writeContent(fileUrl, file, title, authors) {
     // set limits
     const file_size_limit = 15; // in MB
     const row_col_limit = 50000; // number of columns or rows
-    const load_timeout = 30 // in seconds
+    const load_timeout = 30; // in seconds
       
     var raster_loaded = false;
 
