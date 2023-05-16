@@ -10,7 +10,7 @@ const load_timeout = 30; // in seconds
 var raster_loaded = false;
 
 // enable spinner
-var target = document.getElementById('spinnerContainer');
+var target = document.getElementById('map');
 var spinner = new Spinner().spin(target);
 
 function translateBaseHtmlPage() {
