@@ -9,12 +9,6 @@ function translateBaseHtmlPage() {
 
 function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
-    
-    console.log("fileUrl:",fileUrl);
-    console.log("file:",file);
-    console.log("title:",title);
-    console.log("authors:",authors);
-    console.log("fileSizeBlock: ",$("#fileSizeBlock").after());
 
     // set limits
     const file_size_limit = 15; // in MB
@@ -24,7 +18,7 @@ function writeContent(fileUrl, file, title, authors) {
     var raster_loaded = false;
 
     //check file size
-    let file_size = parseFloat($( "#fileSizeBlock td" )[0].innerText.split(" ")[0]);
+    const file_size = get_file_size(fileUrl); 
     
     if (file_size > file_size_limit){
         show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
@@ -89,4 +83,23 @@ function checkIfLoaded() {
             $('#spinnerContainer').hide();
         }  
     }, load_timeout * 1000);
+}
+
+// asnyc call, otherwise the code becomes more confusing (maybe not the best)
+function get_file_size(url_to_geotiff_file) {
+
+    const url_to_file_info = url_to_geotiff_file.replace("access/data","").replace("file","files");
+    var file_size;
+    
+    $.ajax({
+        type: 'GET',
+        url: url_to_file_info,
+        dataType: 'json',
+        complete: function(response) {
+            file_size = response.responseJSON.data.dataFile.filesize/(1024**2);
+        },
+        async: false
+    });		
+    
+    return file_size;
 }
