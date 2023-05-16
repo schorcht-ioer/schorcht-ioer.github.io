@@ -9,6 +9,11 @@ function translateBaseHtmlPage() {
 
 function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
+    
+    console.log("fileUrl:",fileUrl);
+    console.log("file:",file);
+    console.log("title:",title);
+    console.log("authors:",authors);
 
     // set limits
     const file_size_limit = 15; // in MB
