@@ -9,6 +9,10 @@ const load_timeout = 30; // in seconds
   
 var raster_loaded = false;
 
+// enable spinner
+var target = document.getElementById('spinnerContainer');
+var spinner = new Spinner().spin(target);
+
 function translateBaseHtmlPage() {
     var mapPreviewText = $.i18n( "mapPreviewText" );
     $( '.mapPreviewText' ).text( mapPreviewText );
@@ -24,11 +28,7 @@ function writeContent(fileUrl, file, title, authors) {
         show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
     }else{
         // initialize the map
-        var map = L.map('map').fitWorld();
-        
-        // enable spinner
-        var target = document.getElementById('spinnerContainer');
-        var spinner = new Spinner().spin(target);
+        var map = L.map('map').fitWorld(); 
         
         // add OpenStreetMap basemap
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
