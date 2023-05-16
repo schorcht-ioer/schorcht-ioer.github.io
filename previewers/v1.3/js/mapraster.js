@@ -63,7 +63,8 @@ function writeContent(fileUrl, file, title, authors) {
         // check if raster is loaded    
         }).then(checkIfLoaded());
         
-}  
+    } 
+}
 
 function show_error(error_text){
     $('#map').hide();
