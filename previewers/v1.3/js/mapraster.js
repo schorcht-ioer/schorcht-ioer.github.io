@@ -14,7 +14,7 @@ function writeContent(fileUrl, file, title, authors) {
     console.log("file:",file);
     console.log("title:",title);
     console.log("authors:",authors);
-    console.log("fileSizeBlock: ",$("#fileSizeBlock"));
+    console.log("fileSizeBlock: ",$("#fileSizeBlock").after());
 
     // set limits
     const file_size_limit = 15; // in MB
