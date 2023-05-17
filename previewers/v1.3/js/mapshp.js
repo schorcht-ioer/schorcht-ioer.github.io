@@ -22,11 +22,10 @@ function writeContent(fileUrl, file, title, authors) {
     
     //check file size
     const url_to_file_info = fileUrl.replace("access/data","").replace("file","files");
-    var file_size;
 
     $.getJSON(url_to_file_info, function( data ) {
-        file_size = data.data.dataFile.filesize/(1024**2);
-    }).then(function() {
+        const file_size = data.data.dataFile.filesize/(1024**2);
+
         if (file_size > file_size_limit){
             show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
         }else{
