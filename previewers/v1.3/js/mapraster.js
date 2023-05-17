@@ -49,7 +49,7 @@ function writeContent(fileUrl, file, title, authors) {
                     if (georaster.width > row_col_limit || georaster.height > row_col_limit){
                         show_error(`The number of rows or columns is too high to be displayed (limit is ${row_col_limit.toString()})`);
                     // draw the raster
-		    }else{
+                    }else{
                     	//console.log("georaster:", georaster);
             	    
                     	var layer = new GeoRasterLayer({
