@@ -27,7 +27,7 @@ function writeContent(fileUrl, file, title, authors) {
 
     $.getJSON(url_to_file_info, function( data ) {
         file_size = data.data.dataFile.filesize/(1024**2);
-	}).then(function() {
+    }).then(function() {
         if (file_size > file_size_limit){
             show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
         }else{
@@ -44,28 +44,29 @@ function writeContent(fileUrl, file, title, authors) {
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 parseGeoraster(arrayBuffer).then(georaster => {
-                raster_loaded = true;
-                if (georaster.width > row_col_limit || georaster.height > row_col_limit){
-                    show_error(`The number of rows or columns is too high to be displayed (limit is ${row_col_limit.toString()})`);
-                }
-                //console.log("georaster:", georaster);
-            
-                var layer = new GeoRasterLayer({
-                    georaster: georaster,
-                    //debugLevel: 2,
-                    opacity: 1,
-                    resolution: 256
-                });
-                layer.addTo(map);	
-                map.fitBounds(layer.getBounds());
-                
-                // disable spinner
-                spinner.stop();
-                
+                    raster_loaded = true;
+                    // check row, col limits
+                    if (georaster.width > row_col_limit || georaster.height > row_col_limit){
+                        show_error(`The number of rows or columns is too high to be displayed (limit is ${row_col_limit.toString()})`);
+                    // draw the raster
+		    }else{
+                    	//console.log("georaster:", georaster);
+            	    
+                    	var layer = new GeoRasterLayer({
+                    	    georaster: georaster,
+                    	    //debugLevel: 2,
+                    	    opacity: 1,
+                    	    resolution: 256
+                    	});
+                    	layer.addTo(map);	
+                    	map.fitBounds(layer.getBounds());
+                    	
+                    	// disable spinner
+                    	spinner.stop();
+                    }
                 });
             // check if raster is loaded    
-            }).then(checkIfLoaded());
-            
+            }).then(checkIfLoaded());                
         }
     })
 }
