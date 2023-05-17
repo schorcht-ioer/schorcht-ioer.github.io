@@ -24,7 +24,7 @@ function writeContent(fileUrl, file, title, authors) {
     const url_to_file_info = fileUrl.replace("access/data","").replace("file","files");
     var file_size;
 
-    $.getJSON(url_to_file_info).success(function(data) {
+    $.getJSON(url_to_file_info, function( data ) {
         file_size = data.data.dataFile.filesize/(1024**2);
     }).then(function() {
         if (file_size > file_size_limit){
