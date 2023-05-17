@@ -53,7 +53,18 @@ function writeContent(fileUrl, file, title, authors) {
 
 function convertToLayer(buffer){
     shp(buffer).then(function(shapeData){	//More info: https://github.com/calvinmetcalf/shapefile-js
-        var shape = L.shapefile(shapeData).addTo(map);  //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+        var shape = L.shapefile(shapeData, {
+        	onEachFeature: function (feature, layer) {
+        	    if (feature.properties) {
+        	        var popupcontent = [];
+        	        for (var propName in feature.properties) {
+        	            propValue = feature.properties[propName];
+        	            popupcontent.push("<strong>" + propName + "</strong>: " + JSON.stringify(propValue, null, 2));
+        	        }
+        	        layer.bindPopup(popupcontent.join("<br />"));
+        	    }
+        	}
+        }).addTo(map);  //More info: https://github.com/calvinmetcalf/leaflet.shapefile
         map.fitBounds(shape.getBounds()); 
         // disable spinner
         spinner.stop();      
