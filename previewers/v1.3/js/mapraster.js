@@ -20,49 +20,54 @@ function translateBaseHtmlPage() {
 
 function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
-
-    //check file size
-    const file_size = get_file_size(fileUrl); 
     
-    if (file_size > file_size_limit){
-        show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
-    }else{
-        // initialize the map
-        var map = L.map('map').fitWorld(); 
-        
-        // add OpenStreetMap basemap
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        // load the raster
-        fetch(fileUrl)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => {
-            parseGeoraster(arrayBuffer).then(georaster => {
-            raster_loaded = true;
-            if (georaster.width > row_col_limit || georaster.height > row_col_limit){
-                show_error(`The number of rows or columns is too high to be displayed (limit is ${row_col_limit.toString()})`);
-            }
-            //console.log("georaster:", georaster);
-        
-            var layer = new GeoRasterLayer({
-                georaster: georaster,
-                //debugLevel: 2,
-                opacity: 1,
-                resolution: 256
-            });
-            layer.addTo(map);	
-            map.fitBounds(layer.getBounds());
+	//check file size
+	const url_to_file_info = fileUrl.replace("access/data","").replace("file","files");
+	var file_size;      
+
+    $.getJSON(url_to_file_info, function( data ) {
+        file_size = data.data.dataFile.filesize/(1024**2);
+	}).then(function() {
+        if (file_size > file_size_limit){
+            show_error(`The file is too big to be displayed (limit is ${file_size_limit.toString()} MB)`);
+        }else{
+            // initialize the map
+            var map = L.map('map').fitWorld(); 
             
-            // disable spinner
-            spinner.stop();
+            // add OpenStreetMap basemap
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
             
-            });
-        // check if raster is loaded    
-        }).then(checkIfLoaded());
-        
-    } 
+            // load the raster
+            fetch(fileUrl)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => {
+                parseGeoraster(arrayBuffer).then(georaster => {
+                raster_loaded = true;
+                if (georaster.width > row_col_limit || georaster.height > row_col_limit){
+                    show_error(`The number of rows or columns is too high to be displayed (limit is ${row_col_limit.toString()})`);
+                }
+                //console.log("georaster:", georaster);
+            
+                var layer = new GeoRasterLayer({
+                    georaster: georaster,
+                    //debugLevel: 2,
+                    opacity: 1,
+                    resolution: 256
+                });
+                layer.addTo(map);	
+                map.fitBounds(layer.getBounds());
+                
+                // disable spinner
+                spinner.stop();
+                
+                });
+            // check if raster is loaded    
+            }).then(checkIfLoaded());
+            
+        }
+    })
 }
 
 function show_error(error_text){
@@ -71,9 +76,10 @@ function show_error(error_text){
     $('#file_error').append(error_text);
 }     
  
-// it is not possible to catch the error of parseGeoraster :\ see: https://github.com/GeoTIFF/georaster/issues/71 
-// in case of not supported tiffs (e.g. Interleaving type "BSQ" with palette) the script stops
+// it is not possible to catch the error of 'parseGeoraster' :\ see: https://github.com/GeoTIFF/georaster/issues/71 
+// in case of not supported tiffs (e.g. Interleaving type "BSQ" with palette) an error is thrown by 'parseGeoraster', but the promise keeps pending :\
 // therefore, after a certain time, it is checked whether the raster has been loaded.
+// if the raster is not loaded, an error is shown..
 function checkIfLoaded() {
     setTimeout(() => {
         if(!raster_loaded){
@@ -81,23 +87,4 @@ function checkIfLoaded() {
             spinner.stop();
         }  
     }, load_timeout * 1000);
-}
-
-// asnyc call, otherwise the code becomes more confusing (maybe not the best)
-function get_file_size(url_to_geotiff_file) {
-
-    const url_to_file_info = url_to_geotiff_file.replace("access/data","").replace("file","files");
-    var file_size;
-    
-    $.ajax({
-        type: 'GET',
-        url: url_to_file_info,
-        dataType: 'json',
-        complete: function(response) {
-            file_size = response.responseJSON.data.dataFile.filesize/(1024**2);
-        },
-        async: false
-    });		
-    
-    return file_size;
 }
