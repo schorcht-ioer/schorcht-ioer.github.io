@@ -57,7 +57,6 @@ function writeContent(fileUrl, file, title, authors) {
             
             // disable spinner
             spinner.stop();
-            $('#spinnerContainer').hide();
             
             });
         // check if raster is loaded    
@@ -80,7 +79,6 @@ function checkIfLoaded() {
         if(!raster_loaded){
             show_error("The raster could not be loaded. This may be because it is not a valid GeoTIFF (e.g. projection information is missing). Or the TIFF has a palette with interleaving type 'BSQ', which is not supported.");
             spinner.stop();
-            $('#spinnerContainer').hide();
         }  
     }, load_timeout * 1000);
 }
