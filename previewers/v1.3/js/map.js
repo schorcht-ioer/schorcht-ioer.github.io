@@ -59,3 +59,9 @@ function writeContent(fileUrl, file, title, authors) {
         }
     })
 }
+
+function show_error(error_text){
+	$('#map').hide();
+	$('#file_error').show();
+	$('#file_error').append(error_text);
+}     
