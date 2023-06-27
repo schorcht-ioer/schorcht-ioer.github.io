@@ -11,7 +11,7 @@ function writeContent(fileUrl, file, title, authors) {
     addStandardPreviewHeader(file, title, authors);
     
     // set file size limits
-    const file_size_limit = 100; // in MB    
+    const file_size_limit = 20; // in MB    
     
     //check file size
     const url_to_file_info = fileUrl.replace("access/data","").replace("file","files");   
