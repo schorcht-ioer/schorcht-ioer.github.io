@@ -11,7 +11,7 @@ function translateBaseHtmlPage() {
 }
 
 // set limits
-const file_size_limit = 100; // in MB
+const file_size_limit = 20; // in MB
 
 // enable spinner
 var target = document.getElementById('map');
