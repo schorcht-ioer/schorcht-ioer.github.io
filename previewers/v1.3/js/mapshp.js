@@ -11,7 +11,9 @@ function translateBaseHtmlPage() {
 }
 
 // set limits
-const file_size_limit = 20; // in MB
+queryParams = new URLSearchParams(window.location.search.substring(1));
+
+const file_size_limit = queryParams.get("fileSizeLimit");
 
 // enable spinner
 var target = document.getElementById('map');
